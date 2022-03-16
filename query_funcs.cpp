@@ -180,17 +180,17 @@ void query4(connection *C, string team_state, string team_color)
 {
   nontransaction N(*C);
   stringstream ss;
-  ss << "SELECT FIRST_NAME, LAST_NAME, UNIFORM_NUM FROM PLAYER AS P, STATE AS S, COLOR AS C, TEAM AS T ";
+  ss << "SELECT UNIFORM_NUM, FIRST_NAME, LAST_NAME FROM PLAYER AS P, STATE AS S, COLOR AS C, TEAM AS T ";
   ss << "WHERE P.TEAM_ID=T.TEAM_ID AND T.STATE_ID=S.STATE_ID AND T.COLOR_ID=C.COLOR_ID AND ";
   ss << "C.NAME=" << N.quote(team_color) << " AND ";
   ss << "S.NAME=" << N.quote(team_state) << ";";
   result R(N.exec(ss.str()));
   // print result
-  cout << "FIRST_NAME LAST_NAME UNIFORM_NUM\n";
+  cout << "UNIFORM_NUM FIRST_NAME LAST_NAME\n";
   for (result::const_iterator iter = R.begin(); iter != R.end(); ++iter) {
-    cout << iter[0].as<string>() << " ";
+    cout << iter[0].as<int>() << " ";
     cout << iter[1].as<string>() << " ";
-    cout << iter[2].as<int>() << "\n";
+    cout << iter[2].as<string>() << "\n";
   }
 }
 
